@@ -1,5 +1,6 @@
 import robosuite.utils.transform_utils as transform_utils
 import numpy as np
+from collections import deque
 
 
 class BaseObjectState:
@@ -43,6 +44,10 @@ class ObjectState(BaseObjectState):
         self.has_turnon_affordance = hasattr(
             self.env.get_object(self.object_name), "turn_on"
         )
+        # State of the 3DGnd sub-goal switch, see `grasped`.
+        self.init_cnt = 0
+        self.init_pos = None
+        self.recent_pos = deque(maxlen=5)
 
     def get_geom_state(self):
         object_pos = self.env.sim.data.body_xpos[self.env.obj_body_id[self.object_name]]
@@ -132,6 +137,37 @@ class ObjectState(BaseObjectState):
     def update_state(self):
         if self.has_turnon_affordance:
             self.turn_on()
+
+    def grasped(self):
+        # 3DGnd sub-goal switch (used for data generation and evaluation). The first 12 calls
+        # return False; the 12th records the object's reference height (`recent_pos` holds live
+        # views of `sim.data.body_xpos`, so the stabilisation check always passes). Afterwards it
+        # returns whether the object is more than 1 cm above that height (not latched). Kept
+        # as-is to match the training data and evaluation of the paper checkpoint.
+        if self.init_cnt < 10:
+            self.init_cnt += 1
+            return False
+        cur_pos = self.get_geom_state()["pos"]
+        if self.init_pos is not None:
+            return cur_pos[2] - self.init_pos[2] > 0.01
+        else:
+            if len(self.recent_pos) == 0:
+                self.recent_pos.append(cur_pos)
+                return False
+            else:
+                isStablized = True
+                for pos in self.recent_pos:
+                    if abs(pos[2] - cur_pos[2]) > 1e-2:
+                        isStablized = False
+                        break
+                if isStablized:
+                    self.init_pos = np.copy(cur_pos)
+                    return False
+
+                self.recent_pos.append(cur_pos)
+                if len(self.recent_pos) > 10:
+                    self.recent_pos.pop(0)
+        return False
 
 
 class SiteObjectState(BaseObjectState):
