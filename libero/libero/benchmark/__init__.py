@@ -47,6 +47,8 @@ def grab_language_from_filename(x):
             language = " ".join(x[x.find("SCENE") + 8 :].split("_"))
         else:
             language = " ".join(x[x.find("SCENE") + 7 :].split("_"))
+    elif x.startswith("libero_pro_"):  # libero_pro_{object,spatial}_{task,swap}_<LIBERO task>
+        language = " ".join(x.split("_")[4:])
     else:
         language = " ".join(x.split("_"))
     en = language.find(".bddl")
@@ -59,6 +61,10 @@ libero_suites = [
     "libero_goal",
     "libero_90",
     "libero_10",
+    "libero_pro_object_task",
+    "libero_pro_object_swap",
+    "libero_pro_spatial_task",
+    "libero_pro_spatial_swap",
 ]
 task_maps = {}
 max_len = 0
@@ -216,4 +222,36 @@ class LIBERO_100(Benchmark):
     def __init__(self, task_order_index=0):
         super().__init__(task_order_index=task_order_index)
         self.name = "libero_100"
+        self._make_benchmark()
+
+
+@register_benchmark
+class LIBERO_PRO_OBJECT_TASK(Benchmark):
+    def __init__(self, task_order_index=0):
+        super().__init__(task_order_index=task_order_index)
+        self.name = "libero_pro_object_task"
+        self._make_benchmark()
+
+
+@register_benchmark
+class LIBERO_PRO_OBJECT_SWAP(Benchmark):
+    def __init__(self, task_order_index=0):
+        super().__init__(task_order_index=task_order_index)
+        self.name = "libero_pro_object_swap"
+        self._make_benchmark()
+
+
+@register_benchmark
+class LIBERO_PRO_SPATIAL_TASK(Benchmark):
+    def __init__(self, task_order_index=0):
+        super().__init__(task_order_index=task_order_index)
+        self.name = "libero_pro_spatial_task"
+        self._make_benchmark()
+
+
+@register_benchmark
+class LIBERO_PRO_SPATIAL_SWAP(Benchmark):
+    def __init__(self, task_order_index=0):
+        super().__init__(task_order_index=task_order_index)
+        self.name = "libero_pro_spatial_swap"
         self._make_benchmark()
