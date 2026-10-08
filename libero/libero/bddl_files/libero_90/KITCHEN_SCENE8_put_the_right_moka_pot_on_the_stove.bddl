@@ -51,7 +51,7 @@
 
   (:obj_of_interest
     moka_pot_1
-    flat_stove_1
+    flat_stove_1_cook_region
   )
 
   (:init

@@ -65,8 +65,8 @@
   )
 
   (:obj_of_interest
-    porcelain_mug_1
     white_yellow_mug_1
+    kitchen_table_porcelain_mug_front_region
   )
 
   (:init
