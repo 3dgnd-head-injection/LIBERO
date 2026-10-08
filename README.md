@@ -1,3 +1,10 @@
+> [!NOTE]
+> **LIBERO for 3DGnd.** This fork of LIBERO (upstream commit `8f1084e`) contains the changes used
+> for the training data and the LIBERO / LIBERO-PRO evaluation of *Direct Action-Head Injection of
+> A Grounded 3D Point Unlocks Spatial and Task Generalization* (CoRL 2026): a sub-goal switch,
+> placement regions in 19 LIBERO-90 task files and four LIBERO-PRO suites. They are documented in
+> [`3DGND.md`](3DGND.md). The rest of this README is LIBERO's.
+
 <div align="center">
 <img src="https://github.com/Lifelong-Robot-Learning/LIBERO/blob/master/images/libero_logo.png" width="360">
 
