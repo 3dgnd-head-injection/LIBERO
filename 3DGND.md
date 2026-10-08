@@ -3,8 +3,9 @@
 This fork of [LIBERO](https://github.com/Lifelong-Robot-Learning/LIBERO) is the version used to
 generate the training data and to run the LIBERO / LIBERO-PRO evaluation of *Direct Action-Head
 Injection of A Grounded 3D Point Unlocks Spatial and Task Generalization* (3DGnd, CoRL 2026,
-[project page](https://3dgnd-head-injection.github.io)). The 3DGnd code includes it as the git
-submodule `external_dependencies/LIBERO`.
+[project page](https://3dgnd-head-injection.github.io)). The
+[3DGnd code](https://github.com/seantsai1105/3DGnd-Head-Injection) includes it as the git submodule
+`external_dependencies/LIBERO`.
 
 The fork is upstream LIBERO at commit `8f1084e3132a39270c3a13ebe37270a43ece2a01` plus the changes
 below (`git log 8f1084e..HEAD` lists their commits):
